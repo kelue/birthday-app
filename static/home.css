@@ -1,0 +1,66 @@
+body {
+    margin: 0;
+    background: #020202;
+    font-family: 'Fuzzy Bubbles', cursive;
+}
+
+canvas{display:block}
+.welcome {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+h1 {
+    font-size: 4em;
+    font-weight: 300; 
+}
+
+h2{
+    font-size: 3em;
+}
+
+h3 {
+    margin-top: inherit;
+    margin-bottom: .1rem;
+}
+
+.row {
+    --bs-gutter-y : 1.5rem;
+}
+
+.one{
+    color: var(--bs-danger);
+}
+
+.two{
+   color: var(--bs-secondary);
+}
+
+.three {
+    color: var(--bs-success);
+}
+
+.four {
+    color: var(--bs-warning)
+}
+
+.five{
+    color: var(--bs-primary);
+}
+
+.modal-header {
+    border-bottom: 0;
+}
+
+.modal-footer {
+    border-top: 0;
+}
+
+.modal-content {
+    background-color: #f3f3f3;
+}

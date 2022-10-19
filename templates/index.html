@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<body>
+    <div class="container-fluid text-center welcome">
+        <div class="row">
+          <div class="col">
+            <h1><span class="one">It's </span><span class="two">my</span> <span class="three">Bir</span><span class="four">th</span><span class="five">day!!!</span></h1>  
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <h2>🥳🎉🎂</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <img src="../static/media/cover.jpg" class="img-fluid rounded-3" alt="...">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <h3 class="">Wish me a happy birthday😃</h3>
+            <button class="btn btn-outline-warning mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Happy Birthday!</button>
+          </div>
+        </div>
+    </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Send a Message😁</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form>
+          <div class="modal-body">
+            <div class="mb-3 d-flex justify-content-center">
+              <img src="../static/media/cover2.png" class="img-fluid rounded-3" alt="...">
+            </div>
+              <div class="mb-3">
+                <label for="sender-name" class="col-form-label">Sender:</label>
+                <input type="text" class="form-control" id="sender-name">
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">Message:</label>
+                <textarea class="form-control" id="message-text"></textarea>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Send Wishes</button>
+          </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
+    <canvas id="birthday"></canvas>
+  </body>
+  <script src="../static/home.js"></script>
+
+{% endblock %}
