@@ -4,4 +4,4 @@ Flask-session
 requests
 psycopg2-binary
 Gunicorn
-dotenv
+python-dotenv
