@@ -1,0 +1,15 @@
+body{
+    background-color: #f3f3f3;
+    /* color: white; */
+}
+
+.position{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.img-max{
+    max-width: 300px;
+}

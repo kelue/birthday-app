@@ -3,3 +3,9 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
+### env file
+.env
+
+###databse
+*.db 

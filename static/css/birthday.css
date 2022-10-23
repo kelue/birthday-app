@@ -33,6 +33,10 @@ h3 {
     --bs-gutter-y : 1.5rem;
 }
 
+.img-max{
+    max-width: 300px;
+}
+
 .one{
     color: var(--bs-danger);
 }
