@@ -3,3 +3,4 @@ Flask
 Flask-session
 requests
 psycopg2-binary
+Gunicorn
