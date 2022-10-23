@@ -16,7 +16,7 @@ def after_request(response):
     return response
 
 # connect to database
-database = os.getenv("DB")
+database = os.getenv("DB").replace("://", "ql://", 1)
 db = SQL(database)    
 
 @app.route("/")
