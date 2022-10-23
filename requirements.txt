@@ -2,5 +2,4 @@ cs50
 Flask
 Flask-session
 requests
-dotenv
 psycop2-binary
