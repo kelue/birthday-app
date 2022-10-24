@@ -21,11 +21,6 @@ db = SQL(database)
 
 @app.route("/")
 def index():
-
-    rows = db.execute("SELECT * FROM messages")
-
-    print(rows)
-
     return render_template("index.html")
 
 
