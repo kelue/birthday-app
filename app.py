@@ -31,12 +31,12 @@ def index():
 
 @app.route("/login")
 def login():
-    return 0
+    return render_template("login.html")
 
 
 @app.route("/register")
 def register():
-    return 0
+    return render_template("register.html")
 
 @app.route("/birthday")
 def birthday():
