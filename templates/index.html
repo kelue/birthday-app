@@ -1,71 +1,98 @@
 {% extends "layout.html" %}
 
-{% block head %}
+{% block main %}
 
-<link href="../static/css/birthday.css" rel="stylesheet">
+    <div class="d-flex flex-column h-100">
+        <div class="flex-shrink-0">
+            <!-- Header-->
+            <header class="bg-dark py-5">
+                <div class="container px-5">
+                    <div class="row gx-5 align-items-center justify-content-center">
+                        <div class="col-lg-8 col-xl-7 col-xxl-6">
+                            <div class="my-5 text-center text-xl-start">
+                                <h1 class="display-5 fw-bolder text-white mb-2">A Web App for birthday wishes</h1>
+                                <p class="lead fw-normal text-white-50 mb-4">Quickly send your friends a birthday messages in a memorable way using the Birthday App</p>
+                                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+                                    <a class="btn btn-primary btn-lg px-4 me-sm-3" href="/register">Get Started</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="/static/media/header_home.png" alt="..." /></div>
+                    </div>
+                </div>
+            </header>
+            <!-- Features section-->
+            <section class="py-5" id="features">
+                <div class="container px-5 my-5">
+                    <div class="row gx-5">
+                        <div class="col-lg-4 mb-5 mb-lg-0"><h2 class="fw-bolder mb-0">A better way to start enjoying your birthdays.</h2></div>
+                        <div class="col-lg-8">
+                            <div class="row gx-5 row-cols-1 row-cols-md-2">
+                                <div class="col mb-5 h-100">
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-collection"></i></div>
+                                    <h2 class="h5">Messages</h2>
+                                    <p class="mb-0">Receive messages from friends by using your unique link</p>
+                                </div>
+                                <div class="col mb-5 h-100">
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-building"></i></div>
+                                    <h2 class="h5">Timeline</h2>
+                                    <p class="mb-0">View messages from your friends by logging into your acccount</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Blog preview section-->
+            <section class="py-1">
+                <div class="container px-5">
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-lg-8 col-xl-6">
+                            <div class="text-center pb-5">
+                                <h2 class="fw-bolder">How it works</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gx-5">
+                        <div class="col-lg-4 mb-5">
+                            <div class="card h-100 shadow border-0">
+                                <img class="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="..." />
+                                <div class="card-body p-4">
+                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">Setup</div>
+                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Set up</h5></a>
+                                    <p class="card-text mb-0">Create an account and set up your details</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 mb-5">
+                            <div class="card h-100 shadow border-0">
+                                <img class="card-img-top" src="https://dummyimage.com/600x350/adb5bd/495057" alt="..." />
+                                <div class="card-body p-4">
+                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">Share</div>
+                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Get link</h5></a>
+                                    <p class="card-text mb-0">Create your custom link and share to your friends</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 mb-5">
+                            <div class="card h-100 shadow border-0">
+                                <img class="card-img-top" src="https://dummyimage.com/600x350/6c757d/343a40" alt="..." />
+                                <div class="card-body p-4">
+                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">View</div>
+                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">See messages</h5></a>
+                                    <p class="card-text mb-0">View your messages sent by your friends.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
 
 {% endblock %}
 
-{% block body %}
+{% block footer %}
 
-<body>
-    <div class="container-fluid text-center welcome">
-        <div class="row">
-          <div class="col">
-            <h1><span class="one">It's </span><span class="two">my</span> <span class="three">Bir</span><span class="four">th</span><span class="five">day!!!</span></h1>
-            <h1><span class="one">24</span><span class="two">/</span><span class="three">10</span><span class="four">/</span><span class="five">2022</span></h1>  
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <h2>🥳🎉🎂</h2>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <img src="../static/media/cover.jpg" class="img-fluid rounded-3 img-max" alt="...">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <h3 class="">Wish me a happy birthday😃</h3>
-            <button class="btn btn-outline-warning mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Happy Birthday!</button>
-          </div>
-        </div>
-    </div>
-
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Send a Message😁</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form action="/thankyou" method="post">
-          <div class="modal-body">
-            <div class="mb-3 d-flex justify-content-center">
-              <img src="../static/media/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
-            </div>
-              <div class="mb-3">
-                <label for="sender-name" class="col-form-label">Sender:</label>
-                <input type="text" class="form-control" id="sender-name" name="sender" required>
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">Message:</label>
-                <textarea class="form-control" id="message-text" name="message" required></textarea>
-              </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Send Wishes</button>
-          </div>
-      </form>
-      </div>
-    </div>
-  </div>
-
-    <canvas id="birthday"></canvas>
-  </body>
-  <script src="../static/js/home.js"></script>
 
 {% endblock %}

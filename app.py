@@ -7,6 +7,9 @@ load_dotenv()
 #configure flask app
 app = Flask(__name__)
 
+# Ensure templates are auto-reloaded
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+
 @app.after_request
 def after_request(response):
     """Ensure responses aren't cached"""
@@ -15,15 +18,31 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
+#This is production connection
 # connect to database
-database = os.getenv("DB").replace("://", "ql://", 1)
-db = SQL(database)    
+# database = os.getenv("DB").replace("://", "ql://", 1)
+# db = SQL(database)
+
+db = SQL("sqlite:///birthday.db")
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
+@app.route("/login")
+def login():
+    return 0
 
+
+@app.route("/register")
+def register():
+    return 0
+
+@app.route("/birthday")
+def birthday():
+    return render_template("birthday.html", birthday=True) # The birthday prop is used to remove the navbar in the pages they are sent
+
+#Page that says thankyou after after message is received
 @app.route("/thankyou", methods=["GET","POST"])
 def thankyou():
     if request.method == "POST":
@@ -35,8 +54,9 @@ def thankyou():
 
 
         return render_template("thankyou.html")
-    return redirect("/")
+    return redirect("/birthday")
 
+#Page to view messages
 @app.route("/messages")
 def messages():
 
