@@ -9,3 +9,6 @@ __pycache__/
 
 ###databse
 *.db 
+
+### session files
+flask_session
