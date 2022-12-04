@@ -55,12 +55,12 @@ def login():
         elif not request.form.get("password"):
             return apology("login.html", "Must provide password!!!", 403)
 
-        # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        # # Query database for username
+        # rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
-        # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            return apology("login.html", "Invalid username and password!!!", 403)
+        # # Ensure username exists and password is correct
+        # if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+        #     return apology("login.html", "Invalid username and password!!!", 403)
 
         # Remember which user has logged in
         session["user"] = rows[0]["username"]
@@ -108,27 +108,27 @@ def register():
         elif password != passConfirm:
             return apology("register.html", "passwords do not match", 403)
 
-        rows = db.execute("SELECT username, email FROM users")
+        # rows = db.execute("SELECT username, email FROM users")
 
-        names = []
-        emails = []
+        # names = []
+        # emails = []
 
-        for row in rows:
-            names.append(row["username"])
+        # for row in rows:
+        #     names.append(row["username"])
 
-        for email in emails:
-            emails.append(row["email"])
+        # for email in emails:
+        #     emails.append(row["email"])
 
-        if user in names:
-            return apology("register.html", "user with this username already exists!!")
+        # if user in names:
+        #     return apology("register.html", "user with this username already exists!!")
 
-        if email in emails:
-            return apology("register.html", "user with this email already exists!!")
+        # if email in emails:
+        #     return apology("register.html", "user with this email already exists!!")
 
-        # hash password
-        passhash = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
+        # # hash password
+        # passhash = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
 
-        id = db.execute("INSERT INTO users (username, name, email, hash) VALUES (?, ?, ?, ?)", user, name, email, passhash)
+        # id = db.execute("INSERT INTO users (username, name, email, hash) VALUES (?, ?, ?, ?)", user, name, email, passhash)
 
         # Remember which user has registered and log them in
         session["user"] = user
@@ -140,9 +140,16 @@ def register():
     else:
         return render_template("register.html")
 
-@app.route("/birthday")
-def birthday():
-    return render_template("birthday.html", birthday=True) # The birthday prop is used to remove the navbar in the pages they are sent
+# display user dashboard
+@app.route("/dashboard")
+def dashboard():
+    user = session["user"]
+
+    return render_template("dashboard.html", user=user)
+
+@app.route("/birthday/<user>")
+def birthday(user):
+    return render_template("birthday.html", user=user, birthday=True) # The birthday prop is used to remove the navbar in the pages they are sent
 
 #Page that says thankyou after after message is received
 @app.route("/thankyou", methods=["GET","POST"])
@@ -151,9 +158,9 @@ def thankyou():
 
         sender = request.form.get("sender")
         message = request.form.get("message")
+        user = request.form.get("user")
 
-        db.execute("INSERT INTO messages VALUES( ?, ?)", sender, message)
-
+        # db.execute("INSERT INTO messages VALUES( ?, ?) WHERE username = ?", sender, message, user)
 
         return render_template("thankyou.html")
     return redirect("/birthday")
@@ -165,3 +172,13 @@ def messages():
     rows = db.execute("SELECT * FROM messages")
 
     return render_template("messages.html", messages=rows)
+
+@app.route("/logout")
+def logout():
+    """Log user out"""
+
+    # Forget any user_id
+    session.clear()
+
+    # Redirect user to login form
+    return redirect("/")
