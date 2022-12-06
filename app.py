@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, redirect, request, session
+from flask import Flask, render_template, redirect, request, session, url_for
 from cs50 import SQL
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -67,7 +67,7 @@ def login():
         session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
-        return redirect("/")
+        return redirect("/dashboard")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -108,7 +108,7 @@ def register():
         elif password != passConfirm:
             return apology("register.html", "passwords do not match", 403)
 
-        # rows = db.execute("SELECT username, email FROM users")
+        # rows = db.execute("SELECT username, email FROM users WHERE username = ? OR email = ?", user, email)
 
         # names = []
         # emails = []
@@ -132,10 +132,9 @@ def register():
 
         # Remember which user has registered and log them in
         session["user"] = user
-        session["user_id"] = id
 
         # Redirect user to home page
-        return redirect("/")
+        return redirect("/dashboard")
 
     else:
         return render_template("register.html")
@@ -152,8 +151,8 @@ def birthday(user):
     return render_template("birthday.html", user=user, birthday=True) # The birthday prop is used to remove the navbar in the pages they are sent
 
 #Page that says thankyou after after message is received
-@app.route("/thankyou", methods=["GET","POST"])
-def thankyou():
+@app.route("/thanks", methods=["POST"])
+def thanks():
     if request.method == "POST":
 
         sender = request.form.get("sender")
@@ -161,9 +160,11 @@ def thankyou():
         user = request.form.get("user")
 
         # db.execute("INSERT INTO messages VALUES( ?, ?) WHERE username = ?", sender, message, user)
+        return redirect(url_for("thankyou"))
 
-        return render_template("thankyou.html")
-    return redirect("/birthday")
+@app.route("/thankyou")
+def thankyou():
+    return render_template("thankyou.html", birthday=True)
 
 #Page to view messages
 @app.route("/messages")
