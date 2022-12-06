@@ -40,7 +40,7 @@
 
   {% block main %} {% endblock %}
 
-  
+  {% if not birthday %}
      <!-- Footer-->
      <footer class="bg-dark py-4 mt-auto">
         <div class="container text-center px-5">
@@ -49,6 +49,7 @@
             </div>
         </div>
     </footer>
+    {% endif %}
   {% block footer %} {% endblock %}
   </body>
 
