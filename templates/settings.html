@@ -18,35 +18,47 @@
             <div class="card-body p-5 text-center">
                 <div class="mb-md-5 mt-md-4 pb-3">
                     {% if error %}
-                      <p>{{ error }}</p>
+                      <p class="text-danger">{{ error }}</p>
                     {% endif %}
                     <h2 class="fw-bold mb-2 text-uppercase">Settings</h2>
-                    <p class="text-white mb-3">Customise your birthday experience 🎉</p>
+                    <h5 class="text-white mb-0">Select display images to customise your birthday experience 🎉</h5>
+                    <p class="text-white mb-3">Accepted image formats are png, jpg and jpeg</p>
+
                     <form action="/set" method="post" enctype="multipart/form-data">
 
                         <div class="mb-3">
                             <label for="cover-image" class="col-form-label">Select cover image to display on birthday page</label>
-                            <input type="file" class="form-control" id="coverImage" name="coverImage" required>
+                            <input type="file" class="form-control" id="coverImage" name="coverImage">
                         </div>
                         <div class="mb-3 d-flex justify-content-center">
+                            {% if request.args.get('cover') %}
+                            <img src="../static/users/{{ request.args.get('cover') }}" class="img-fluid rounded-3 img-max" alt="...">
+                            {% else%}
                             <img src="../static/media/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
+                            {% endif %}
                         </div>
 
                         <div class="mb-3">
                             <label for="form-image" class="col-form-label">Select image to display on birthday form</label>
-                            <input type="file" class="form-control" id="formImage" name="formImage" required>
+                            <input type="file" class="form-control" id="formImage" name="formImage">
                         </div>
                         <div class="mb-3 d-flex justify-content-center">
+                            {% if request.args.get('form') %}
+                            <img src="../static/users/{{ request.args.get('form') }}" class="img-fluid rounded-3 img-max" alt="...">
+                            {% else%}
                             <img src="../static/media/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
-                        </div>
+                            {% endif %}                        </div>
 
                         <div class="mb-3">
                             <label for="thanks-image" class="col-form-label">Select image to display on thankyou page</label>
-                            <input type="file" class="form-control" id="thanksImage" name="thanksImage" required>
+                            <input type="file" class="form-control" id="thanksImage" name="thanksImage">
                         </div>
                         <div class="mb-5 d-flex justify-content-center">
+                            {% if request.args.get('thanks') %}
+                            <img src="../static/users/{{ request.args.get('thanks') }}" class="img-fluid rounded-3 img-max" alt="...">
+                            {% else%}
                             <img src="../static/media/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
-                        </div>
+                            {% endif %}                        </div>
         
                         <button class="btn btn-outline-light btn-lg px-5" style="border-radius: 5rem;" type="submit">Update settings</button>
         
