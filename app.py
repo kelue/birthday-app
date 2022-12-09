@@ -3,12 +3,19 @@ from flask import Flask, render_template, redirect, request, session, url_for
 from cs50 import SQL
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
-from helpers import apology
+from werkzeug.utils import secure_filename
+from helpers import apology, allowed_file
 from dotenv import load_dotenv
 load_dotenv()
 
+# configure image upload folder
+UPLOAD_FOLDER = './static/users'
+
 #configure flask app
 app = Flask(__name__)
+
+# set upload folder
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -63,8 +70,8 @@ def login():
         #     return apology("login.html", "Invalid username and password!!!", 403)
 
         # Remember which user has logged in
-        session["user"] = rows[0]["username"]
-        session["user_id"] = rows[0]["id"]
+        # session["user"] = rows[0]["username"]
+        # session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
         return redirect("/dashboard")
@@ -91,22 +98,22 @@ def register():
 
         # check for valid user name
         if not user:
-            return apology("register.html", "Username cannot be blank", 403)
+            return apology("register.html", "Username cannot be blank!!!", 403)
         # check for valid password
         elif not password:
-            return apology("register.html", "Must enter password", 403)
+            return apology("register.html", "Must enter password!!!", 403)
         # check for valid name
         elif not name:
-            return apology("register.html", "Must enter name", 403)
+            return apology("register.html", "Must enter name!!!", 403)
         # check for valid email
         elif not email:
-            return apology("register.html", "Must enter email", 403)
+            return apology("register.html", "Must enter email!!!", 403)
         # check for confirm password input
         elif not passConfirm:
-            return apology("register.html", "Retype password ", 403)
+            return apology("register.html", "Retype password!!!", 403)
         # check that both password inputs match
         elif password != passConfirm:
-            return apology("register.html", "passwords do not match", 403)
+            return apology("register.html", "passwords do not match!!!", 403)
 
         # rows = db.execute("SELECT username, email FROM users WHERE username = ? OR email = ?", user, email)
 
@@ -146,6 +153,59 @@ def dashboard():
 
     return render_template("dashboard.html", user=user)
 
+@app.route("/settings")
+def settings():
+
+    return render_template("settings.html")
+
+@app.route("/set", methods=['GET', 'POST'])
+def upload_file():
+    user = session["user"]
+
+    if request.method == "POST":
+        cover_image = request.files['coverImage']
+        form_image = request.files['formImage']
+        thank_image = request.files['thanksImage']
+
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if cover_image.filename == '' or form_image.filename == '' or thank_image.filename == '':
+            return apology('settings.html', 'Must select an image for all file parts!!!')
+
+        else:
+            if cover_image and allowed_file(cover_image.filename):
+                cover_file = user + '-' + cover_image.filename
+                cover_filename = secure_filename(cover_file)
+            else:
+                return apology('settings.html', 'Selected file must be either png, jpeg or jpg format!!!')
+
+
+            if form_image and allowed_file(form_image.filename):
+                form_file = user + '-' + form_image.filename
+                form_filename = secure_filename(form_file)
+                
+            else:
+                return apology('settings.html', 'Selected file must be either png, jpeg or jpg format!!!')
+
+            if thank_image and allowed_file(thank_image.filename):
+                thank_file = user + '-' + thank_image.filename
+                thank_filename = secure_filename(thank_file)
+            else:
+                return apology('settings.html', 'Selected file must be either png, jpeg or jpg format!!!')
+
+            # if all files are of the correct format, save to the filesystem
+            cover_image.save(os.path.join(app.config['UPLOAD_FOLDER'], cover_filename))
+            form_image.save(os.path.join(app.config['UPLOAD_FOLDER'], form_filename))
+            thank_image.save(os.path.join(app.config['UPLOAD_FOLDER'], thank_filename))
+
+            # save to database
+
+            # return to settings page and display pictures
+            return redirect(url_for("settings", cover=cover_filename, form=form_filename, thanks=thank_filename))
+    else:
+        return redirect(url_for('settings'))
+
+
 @app.route("/birthday/<user>")
 def birthday(user):
     return render_template("birthday.html", user=user, birthday=True) # The birthday prop is used to remove the navbar in the pages they are sent
@@ -172,7 +232,7 @@ def messages():
 
     rows = db.execute("SELECT * FROM messages")
 
-    return render_template("messages.html", messages=rows)
+    return render_template("messages.html", messages=rows, birthday=True)
 
 @app.route("/logout")
 def logout():
