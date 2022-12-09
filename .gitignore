@@ -14,4 +14,6 @@ __pycache__/
 flask_session
 
 ### user files
-static/users
+static/users/*.jpg
+static/users/*.png
+static/users/*.jpeg
