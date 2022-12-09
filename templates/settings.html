@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+
+{% block head %}
+
+<link rel="stylesheet" href="../static/css/form.css">
+<!-- <link href="../static/css/birthday.css" rel="stylesheet"> -->
+
+{% endblock %}
+
+{% block main %}
+
+<section class="gradient-custom">
+    <div class="container py-5">
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+                <div class="mb-md-5 mt-md-4 pb-3">
+                    {% if error %}
+                      <p>{{ error }}</p>
+                    {% endif %}
+                    <h2 class="fw-bold mb-2 text-uppercase">Settings</h2>
+                    <p class="text-white mb-3">Customise your birthday experience 🎉</p>
+                    <form action="/set" method="post" enctype="multipart/form-data">
+
+                        <div class="mb-3">
+                            <label for="cover-image" class="col-form-label">Select cover image to display on birthday page</label>
+                            <input type="file" class="form-control" id="coverImage" name="coverImage" required>
+                        </div>
+                        <div class="mb-3 d-flex justify-content-center">
+                            <img src="../static/media/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="form-image" class="col-form-label">Select image to display on birthday form</label>
+                            <input type="file" class="form-control" id="formImage" name="formImage" required>
+                        </div>
+                        <div class="mb-3 d-flex justify-content-center">
+                            <img src="../static/media/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="thanks-image" class="col-form-label">Select image to display on thankyou page</label>
+                            <input type="file" class="form-control" id="thanksImage" name="thanksImage" required>
+                        </div>
+                        <div class="mb-5 d-flex justify-content-center">
+                            <img src="../static/media/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
+                        </div>
+        
+                        <button class="btn btn-outline-light btn-lg px-5" style="border-radius: 5rem;" type="submit">Update settings</button>
+        
+                        </div>
+                    </form>
+              <div>
+                <p class="mb-0">Return to profile. <a href="/dashboard" class="text-white-50 fw-bold">Go back</a>
+                </p>
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
