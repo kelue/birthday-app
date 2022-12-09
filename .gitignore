@@ -12,3 +12,6 @@ __pycache__/
 
 ### session files
 flask_session
+
+### user files
+static/users
