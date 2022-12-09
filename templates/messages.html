@@ -1,14 +1,24 @@
 {% extends "layout.html" %}
 
-{% block head %}
-
-<!-- <link rel="stylesheet" href="../static/css/thankyou.css"> -->
-
+{% block nav %}
+  <nav class="bg-light border navbar navbar-expand-md navbar-light sticky-top">
+    <div class="container-fluid d-flex justify-content-center">
+        <h3 class="">Your messages</h3>
+        <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav ms-auto mt-2">
+                <li class="nav-item"><a class="nav-link" href="/dashboard">Profile</a></li>
+            </ul>
+      </div>
+    </div>
+  </nav>
 {% endblock %}
 
 {% block main %}
-    <div style="margin: 30px; background-color: black;">
-        <div class="container">
+    <div style="background-color: black;">
+        <div class="container py-3 vh-100">
             {% for message in messages %}
             <div class="card mb-3">
                 <h5 class="card-header">Sender: {{ message.sender }}</h5>
