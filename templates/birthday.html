@@ -44,6 +44,9 @@
             <div class="mb-3 d-flex justify-content-center">
               <img src="../static/media/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
             </div>
+              {% if error %}
+                  <p class="text-danger">{{ error }}</p>
+              {% endif %}
               <div class="mb-3">
                 <label for="sender-name" class="col-form-label">Sender:</label>
                 <input type="text" class="form-control" id="sender-name" name="sender" required>

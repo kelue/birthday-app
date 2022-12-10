@@ -142,7 +142,6 @@ def register():
 
         # Redirect user to home page
         return redirect("/dashboard")
-
     else:
         return render_template("register.html")
 
@@ -154,11 +153,13 @@ def dashboard():
 
     return render_template("dashboard.html", user=user, link=link)
 
+# user setting page
 @app.route("/settings")
 def settings():
 
     return render_template("settings.html")
 
+# route to handle user settings input
 @app.route("/set", methods=['GET', 'POST'])
 def upload_file():
     user = session["user"]
@@ -211,7 +212,7 @@ def upload_file():
 def birthday(user):
     return render_template("birthday.html", user=user, birthday=True) # The birthday prop is used to remove the navbar in the pages they are sent
 
-#Page that says thankyou after after message is received
+# route to handle birthday form
 @app.route("/thanks", methods=["POST"])
 def thanks():
     if request.method == "POST":
@@ -220,9 +221,13 @@ def thanks():
         message = request.form.get("message")
         user = request.form.get("user")
 
+        if sender == '' or message == '':
+            return apology("birthday.html", "Message must include a sender and a message", 403)
+
         # db.execute("INSERT INTO messages VALUES( ?, ?) WHERE username = ?", sender, message, user)
         return redirect(url_for("thankyou"))
 
+# Page that says thankyou after after message is received
 @app.route("/thankyou")
 def thankyou():
     return render_template("thankyou.html", birthday=True)
