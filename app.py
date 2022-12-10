@@ -150,8 +150,9 @@ def register():
 @app.route("/dashboard")
 def dashboard():
     user = session["user"]
+    link = os.getenv("link")
 
-    return render_template("dashboard.html", user=user)
+    return render_template("dashboard.html", user=user, link=link)
 
 @app.route("/settings")
 def settings():
