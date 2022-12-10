@@ -1,7 +1,3 @@
-document.getElementById('copy-text').addEventListener('click', function(e){ 
-    
-  });
-
 function copyText(){
     let myUrl = document.getElementById("user-link").innerHTML;
     myUrl = myUrl.split('<')
