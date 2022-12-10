@@ -17,3 +17,6 @@ flask_session
 static/users/*.jpg
 static/users/*.png
 static/users/*.jpeg
+
+### exception in user folder
+!static/users/form.jpg
