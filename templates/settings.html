@@ -30,11 +30,14 @@
                             <label for="cover-image" class="col-form-label">Select cover image to display on birthday page</label>
                             <input type="file" class="form-control" id="coverImage" name="coverImage">
                         </div>
+                        <p class="text-white-50 mb-3">Cover image</p>
                         <div class="mb-3 d-flex justify-content-center">
                             {% if request.args.get('cover') %}
                             <img src="../static/users/{{ request.args.get('cover') }}" class="img-fluid rounded-3 img-max" alt="...">
-                            {% else%}
-                            <img src="../static/media/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
+                            {% elif image %}
+                            <img src="../static/users/{{ image.cover }}" class="img-fluid rounded-3 img-max" alt="...">
+                            {% else %}
+                            <img src="../static/users/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
                             {% endif %}
                         </div>
 
@@ -42,23 +45,31 @@
                             <label for="form-image" class="col-form-label">Select image to display on birthday form</label>
                             <input type="file" class="form-control" id="formImage" name="formImage">
                         </div>
+                        <p class="text-white-50 mb-3">Form image</p>
                         <div class="mb-3 d-flex justify-content-center">
                             {% if request.args.get('form') %}
                             <img src="../static/users/{{ request.args.get('form') }}" class="img-fluid rounded-3 img-max" alt="...">
-                            {% else%}
-                            <img src="../static/media/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
-                            {% endif %}                        </div>
+                            {% elif image %}
+                            <img src="../static/users/{{ image.form }}" class="img-fluid rounded-3 img-max" alt="...">
+                            {% else %}
+                            <img src="../static/users/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
+                            {% endif %}                        
+                        </div>
 
                         <div class="mb-3">
                             <label for="thanks-image" class="col-form-label">Select image to display on thankyou page</label>
                             <input type="file" class="form-control" id="thanksImage" name="thanksImage">
                         </div>
+                        <p class="text-white-50 mb-3">Thankyou image</p>
                         <div class="mb-5 d-flex justify-content-center">
                             {% if request.args.get('thanks') %}
                             <img src="../static/users/{{ request.args.get('thanks') }}" class="img-fluid rounded-3 img-max" alt="...">
-                            {% else%}
-                            <img src="../static/media/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
-                            {% endif %}                        </div>
+                            {% elif image %}
+                            <img src="../static/users/{{ image.thanks }}" class="img-fluid rounded-3 img-max" alt="...">
+                            {% else %}
+                            <img src="../static/users/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
+                            {% endif %}                        
+                        </div>
         
                         <button class="btn btn-outline-light btn-lg px-5" style="border-radius: 5rem;" type="submit">Update settings</button>
         
