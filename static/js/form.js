@@ -9,7 +9,7 @@ document.querySelector("#confirmPassword").addEventListener("input", (event) => 
 
 document.querySelector("#password").addEventListener("input", (event) => {
     secpass = event.target.value
-    checkMatch()
+    checklength()
 })
 
 const checkMatch = () => {
@@ -17,5 +17,13 @@ const checkMatch = () => {
         document.querySelector("#nomatch").innerHTML = "Passwords do not match!!!!"
     }else{
         document.querySelector("#nomatch").innerHTML = ""
+    }
+}
+
+const checklength = () => {
+    if (secpass.length < 8){
+        document.querySelector("#passlength").innerHTML = "Password length should be more than 8 characters"
+    }else{
+        document.querySelector("#passlength").innerHTML = ""
     }
 }
