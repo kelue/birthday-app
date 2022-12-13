@@ -35,10 +35,8 @@ def after_request(response):
 
 #This is production connection
 # connect to database
-# database = os.getenv("DB").replace("://", "ql://", 1)
-# db = SQL(database)
-
-db = SQL("sqlite:///birthday.db")
+database = os.getenv("DB").replace("://", "ql://", 1)
+db = SQL(database)
 
 @app.route("/")
 def index():
@@ -54,24 +52,27 @@ def login():
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
+        user = request.form.get("username").lower()
+        password = request.form.get("password")
+
         # Ensure username was submitted
-        if not request.form.get("username"):
+        if not user:
             return apology("login.html", "Must provide username!!!", 403)
 
         # Ensure password was submitted
-        elif not request.form.get("password"):
+        elif not password:
             return apology("login.html", "Must provide password!!!", 403)
 
-        # # Query database for username
-        # rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        # Query database for username
+        rows = db.execute("SELECT * FROM users WHERE username = ?", user)
 
-        # # Ensure username exists and password is correct
-        # if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-        #     return apology("login.html", "Invalid username and password!!!", 403)
+        # Ensure username exists and password is correct
+        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], password):
+            return apology("login.html", "Invalid username and password!!!", 403)
 
         # Remember which user has logged in
-        # session["user"] = rows[0]["username"]
-        # session["user_id"] = rows[0]["id"]
+        session["user"] = rows[0]["username"]
+        session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
         return redirect("/dashboard")
@@ -90,9 +91,9 @@ def register():
 
     if request.method == "POST":
         # extract all details from form
-        name = request.form.get("name")
-        user = request.form.get("username")
-        email = request.form.get("email")
+        name = request.form.get("name").lower()
+        user = request.form.get("username").lower()
+        email = request.form.get("email").lower()
         password = request.form.get("password")
         passConfirm = request.form.get("confirmpassword")
 
@@ -115,27 +116,27 @@ def register():
         elif password != passConfirm:
             return apology("register.html", "passwords do not match!!!", 403)
 
-        # rows = db.execute("SELECT username, email FROM users WHERE username = ? OR email = ?", user, email)
+        rows = db.execute("SELECT username, email FROM users WHERE username = ? OR email = ?", user, email)
 
-        # names = []
-        # emails = []
+        names = []
+        emails = []
 
-        # for row in rows:
-        #     names.append(row["username"])
+        for row in rows:
+            names.append(row["username"])
 
-        # for email in emails:
-        #     emails.append(row["email"])
+        for email in emails:
+            emails.append(row["email"])
 
-        # if user in names:
-        #     return apology("register.html", "user with this username already exists!!")
+        if user in names:
+            return apology("register.html", "user with this username already exists!!")
 
-        # if email in emails:
-        #     return apology("register.html", "user with this email already exists!!")
+        if email in emails:
+            return apology("register.html", "user with this email already exists!!")
 
-        # # hash password
-        # passhash = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
+        # hash password
+        passhash = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
 
-        # id = db.execute("INSERT INTO users (username, name, email, hash) VALUES (?, ?, ?, ?)", user, name, email, passhash)
+        id = db.execute("INSERT INTO users (username, name, email, passhash) VALUES (?, ?, ?, ?) RETURNING id", user, name, email, passhash)
 
         # Remember which user has registered and log them in
         session["user"] = user
@@ -201,9 +202,11 @@ def upload_file():
             thank_image.save(os.path.join(app.config['UPLOAD_FOLDER'], thank_filename))
 
             # save to database
+            id = db.execute("INSERT INTO settings (username, cover_file, form_file, thanks_file) VALUES (?, ?, ?, ?) RETURNING id", user, cover_filename, form_filename, thank_filename)
 
             # return to settings page and display pictures
-            return redirect(url_for("settings", cover=cover_filename, form=form_filename, thanks=thank_filename))
+            if id:
+                return redirect(url_for("settings", cover=cover_filename, form=form_filename, thanks=thank_filename))
     else:
         return redirect(url_for('settings'))
 
@@ -224,8 +227,9 @@ def thanks():
         if sender == '' or message == '':
             return apology("birthday.html", "Message must include a sender and a message", 403)
 
-        # db.execute("INSERT INTO messages VALUES( ?, ?) WHERE username = ?", sender, message, user)
-        return redirect(url_for("thankyou"))
+        db.execute("INSERT INTO messages (username, sender, message) VALUES(?, ?, ?) RETURNING id", user, sender, message)
+
+        return redirect(url_for("thankyou", user=user))
 
 # Page that says thankyou after after message is received
 @app.route("/thankyou")
@@ -235,8 +239,9 @@ def thankyou():
 #Page to view messages
 @app.route("/messages")
 def messages():
+    user = session["user"]
 
-    rows = db.execute("SELECT * FROM messages")
+    rows = db.execute("SELECT * FROM messages WHERE user = ?", user)
 
     return render_template("messages.html", messages=rows, birthday=True)
 
