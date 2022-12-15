@@ -20,7 +20,11 @@
         </div>
         <div class="row">
           <div class="col">
-            <img src="../static/media/cover.jpg" class="img-fluid rounded-3 img-max" alt="...">
+            {% if image %}
+            <img src="../static/users/{{ image.cover }}" class="img-fluid rounded-3 img-max" alt="...">
+            {% else %}
+            <img src="../static/users/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
+            {% endif %}         
           </div>
         </div>
         <div class="row">
@@ -42,7 +46,11 @@
         <form action="/thanks" method="post">
           <div class="modal-body">
             <div class="mb-3 d-flex justify-content-center">
-              <img src="../static/media/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
+              {% if image %}
+              <img src="../static/users/{{ image.form }}" class="img-fluid rounded-3 img-max" alt="...">
+              {% else %}
+              <img src="../static/users/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
+              {% endif %}            
             </div>
               {% if error %}
                   <p class="text-danger">{{ error }}</p>

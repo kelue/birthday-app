@@ -15,8 +15,11 @@
              <div class="card shadow-lg">
                <div class="card-body p-4 p-md-5">
                  <h1 class="display-3">Thank you!!!!</h1>
-                 <img src="../static/media/thankyou.jpg" alt="thank you" class="img-fliud rounded-3 img-max">
-                 <p class="mt-3"><a href="/birthday/{{ request.args.get('user') }}" class="text-dark fw-bold">Back to birthday page</a></p>
+                 {% if image %}
+                 <img src="../static/users/{{ image.thanks }}" class="img-fluid rounded-3 img-max" alt="...">
+                 {% else %}
+                 <img src="../static/users/form.jpg" class="img-fluid rounded-3 img-max" alt="...">
+                 {% endif %}                 <p class="mt-3"><a href="/birthday/{{ request.args.get('user') }}" class="text-dark fw-bold">Back to birthday page</a></p>
                  <p class="mt-3">Share your own personal link with your friends? <a href="/" class="text-dark fw-bold">Get Started</a></p>
                </div>
              </div>
