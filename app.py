@@ -158,8 +158,20 @@ def dashboard():
 # user setting page
 @app.route("/settings")
 def settings():
-    
-    return render_template("settings.html")
+    user = session["user"]
+
+    rows = db.execute("SELECT cover_file, form_file, thanks_file FROM settings WHERE username = ?", user)
+
+    if len(rows) != 1:
+        return render_template("settings.html")
+    else:
+        image = {}
+
+        image["cover"] = rows[0]["cover_file"]
+        image["form"] = rows[0]["form_file"]
+        image["thanks"] = rows[0]["thanks_file"]
+
+        return render_template("settings.html", image=image)
 
 # route to handle user settings input
 @app.route("/set", methods=['GET', 'POST'])
