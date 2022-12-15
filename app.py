@@ -64,15 +64,14 @@ def login():
             return apology("login.html", "Must provide password!!!", 403)
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", user)
+        rows = db.execute("SELECT username, passhash FROM users WHERE username = ? OR email = ?", user, user)
 
         # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], password):
+        if len(rows) != 1 or not check_password_hash(rows[0]["passhash"], password):
             return apology("login.html", "Invalid username and password!!!", 403)
 
         # Remember which user has logged in
         session["user"] = rows[0]["username"]
-        session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
         return redirect("/dashboard")
@@ -118,13 +117,15 @@ def register():
 
         rows = db.execute("SELECT username, email FROM users WHERE username = ? OR email = ?", user, email)
 
+        print({"rows": rows})
+
         names = []
         emails = []
 
         for row in rows:
             names.append(row["username"])
 
-        for email in emails:
+        for row in rows:
             emails.append(row["email"])
 
         if user in names:
@@ -157,7 +158,7 @@ def dashboard():
 # user setting page
 @app.route("/settings")
 def settings():
-
+    
     return render_template("settings.html")
 
 # route to handle user settings input
