@@ -30,6 +30,11 @@
                 </ul>
               </div>
               {% endfor %}
+              {% if not messages %}
+              <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+                <p class="text-white-50">Your messages will be display here</p>
+              </div>
+              {% endif %}
         </div>
       </div>
 
