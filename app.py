@@ -229,7 +229,18 @@ def upload_file():
 
 @app.route("/birthday/<user>")
 def birthday(user):
-    return render_template("birthday.html", user=user, birthday=True) # The birthday prop is used to remove the navbar in the pages they are sent
+
+    rows = db.execute("SELECT cover_file, form_file, thanks_file FROM settings WHERE username = ?", user)
+
+    if len(rows) != 1:
+        return render_template("birthday.html", user=user, birthday=True)
+    else:
+        image = {}
+
+        image["cover"] = rows[0]["cover_file"]
+        image["form"] = rows[0]["form_file"]
+        
+        return render_template("birthday.html", user=user, birthday=True, image=image) # The birthday prop is used to remove the navbar in the pages they are sent
 
 # route to handle birthday form
 @app.route("/thanks", methods=["POST"])
@@ -250,7 +261,18 @@ def thanks():
 # Page that says thankyou after after message is received
 @app.route("/thankyou")
 def thankyou():
-    return render_template("thankyou.html", birthday=True)
+    user = request.args.get('user')
+
+    rows = db.execute("SELECT cover_file, form_file, thanks_file FROM settings WHERE username = ?", user)
+
+    if len(rows) != 1:
+        return render_template("thankyou.html", birthday=True)
+    else:
+        image = {}
+
+        image["thanks"] = rows[0]["thanks_file"]
+
+        return render_template("thankyou.html", birthday=True, image=image)
 
 #Page to view messages
 @app.route("/messages")
@@ -258,7 +280,7 @@ def thankyou():
 def messages():
     user = session["user"]
 
-    rows = db.execute("SELECT * FROM messages WHERE user = ?", user)
+    rows = db.execute("SELECT * FROM messages WHERE username = ?", user)
 
     return render_template("messages.html", messages=rows, birthday=True)
 
