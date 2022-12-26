@@ -4,7 +4,7 @@ from cs50 import SQL
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
-from helpers import apology, allowed_file
+from helpers import apology, allowed_file, login_required
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -149,6 +149,7 @@ def register():
 
 # display user dashboard
 @app.route("/dashboard")
+@login_required
 def dashboard():
     user = session["user"]
     link = os.getenv("link")
@@ -157,6 +158,7 @@ def dashboard():
 
 # user setting page
 @app.route("/settings")
+@login_required
 def settings():
     user = session["user"]
 
@@ -175,6 +177,7 @@ def settings():
 
 # route to handle user settings input
 @app.route("/set", methods=['GET', 'POST'])
+@login_required
 def upload_file():
     user = session["user"]
 
@@ -251,6 +254,7 @@ def thankyou():
 
 #Page to view messages
 @app.route("/messages")
+@login_required
 def messages():
     user = session["user"]
 
