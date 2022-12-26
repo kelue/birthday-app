@@ -1,5 +1,6 @@
 from flask import redirect, render_template, session
 from functools import wraps
+import re 
 
 # extensions for image files
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -27,3 +28,8 @@ def login_required(f):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
+
+def is_valid_email(email):
+    # Use a regex to check if the email is in a valid format
+    regex = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+    return re.fullmatch(regex, email) is not None   
