@@ -4,7 +4,7 @@ from cs50 import SQL
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
-from helpers import apology, allowed_file, login_required
+from helpers import apology, allowed_file, login_required, is_valid_email
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -108,6 +108,8 @@ def register():
         # check for valid email
         elif not email:
             return apology("register.html", "Must enter email!!!", 403)
+        elif not is_valid_email(email):
+            return apology("register.html", "Invalid Email!!!", 403)
         # check for confirm password input
         elif not passConfirm:
             return apology("register.html", "Retype password!!!", 403)
