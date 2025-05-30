@@ -1,7 +1,5 @@
 # Birthday Web App
 
-#### Video Demo: https://youtu.be/ks7KEw0bDn8
-
 #### Description: 
 
 The web application, "Birthday App" allows users to create a custom link to send to their friends and family. When someone clicks on the link, they can enter their name and a personalized message for the birthday person. The birthday person will then receive all of the messages in one place, creating a special and unique birthday celebration. To use the app, users simply need to sign up and create a profile. 
